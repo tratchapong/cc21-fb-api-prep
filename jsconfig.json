@@ -7,7 +7,7 @@
     "esModuleInterop": true,               // Fixes 'import x from "pkg"' issues
     "checkJs": true,                       // Enable type-checking for JS
     "strict": true,                        // Enable strict checks
-    "baseUrl": ".",                        // Root folder for absolute imports
+    "baseUrl": ".",                      // Root folder for absolute imports
     "paths": {  },
     "resolveJsonModule": true              // Allow importing .json files
   },
