@@ -1,8 +1,9 @@
-// @ts-nocheck
 import express from 'express'
 
 import authRoute from './routes/auth.route.js'
 import createHttpError from 'http-errors'
+import errorMiddleware from './middlewares/error.middleware.js'
+import notFoundMiddleware from './middlewares/notFound.middleware.js'
 
 
 const app = express()
@@ -14,16 +15,8 @@ app.use('/api/post', (req, res)=>{ res.send('post service')})
 app.use('/api/comment',(req, res)=>{ res.send('comment service')})
 app.use('/api/like',(req, res)=>{ res.send('like service')})
 
-app.use( (req, res, next)=>{
-    return next (createHttpError.NotFound())
-})
+app.use( notFoundMiddleware)
 
-app.use( (err,req,res,next) => {
-    res.status(err.status || 500)
-    res.json({
-        status: err.status || 500,
-        message: err.message || 'Internal Server Error',
-  })
-})
+app.use(errorMiddleware)
 
 export default app
