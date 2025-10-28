@@ -4,7 +4,7 @@ import authRoute from './routes/auth.route.js'
 import createHttpError from 'http-errors'
 import errorMiddleware from './middlewares/error.middleware.js'
 import notFoundMiddleware from './middlewares/notFound.middleware.js'
-
+import shutdown from './utils/shutdown.util.js'
 
 const app = express()
 
@@ -16,11 +16,18 @@ app.use('/api/comment',(req, res)=>{ res.send('comment service')})
 app.use('/api/like',(req, res)=>{ res.send('like service')})
 app.use('/api/shutdown', (req, res)=> { 
     res.json({msg: 'ok, shutdown server'})    
-    process.exit(0)
+    shutdown('SIGTERM')
 })
 
 app.use( notFoundMiddleware)
 
 app.use(errorMiddleware)
+
+// Listen for termination signals
+process.on('SIGINT', () => shutdown('SIGINT'));   // Ctrl+C
+process.on('SIGTERM', () => shutdown('SIGTERM')); // kill command or Docker stop
+// Catch unhandled errors
+process.on("uncaughtException", ()=>  shutdown('uncaughtException'))
+process.on("unhandledRejection", ()=> shutdown('unhandledRejection'))
 
 export default app
