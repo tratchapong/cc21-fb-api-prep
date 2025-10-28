@@ -1,4 +1,7 @@
 # filename : test-api.http
+
+GET http://localhost:8899/api/shutdown
+###
 GET http://localhost:8899/api/auth/me
 ###
 POST http://localhost:8899/api/auth/login HTTP/1.1

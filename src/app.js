@@ -14,6 +14,10 @@ app.use('/api/auth', authRoute)
 app.use('/api/post', (req, res)=>{ res.send('post service')})
 app.use('/api/comment',(req, res)=>{ res.send('comment service')})
 app.use('/api/like',(req, res)=>{ res.send('like service')})
+app.use('/api/shutdown', (req, res)=> { 
+    res.json({msg: 'ok, shutdown server'})    
+    process.exit(0)
+})
 
 app.use( notFoundMiddleware)
 
